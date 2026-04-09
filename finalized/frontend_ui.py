@@ -20,8 +20,8 @@ def inject_apple_theme():
             --border: #d7dee5;
             --text: #1f2933;
             --muted: #667380;
-            --accent: #2d5c88;
-            --accent-soft: #e7eff6;
+            --accent: #2f7a59;
+            --accent-soft: #e7f3ed;
             --green: #2f7a59;
             --shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
             --radius: 16px;
@@ -111,19 +111,19 @@ def inject_apple_theme():
             background: #d7dee5 !important;
           }
           [data-testid="stSlider"] [data-baseweb="slider"] > div > div > div > div {
-            background: #2d5c88 !important;
+            background: var(--accent) !important;
           }
 
           .stButton > button, .stDownloadButton > button {
-            background: #2d5c88 !important;
+            background: var(--accent) !important;
             color: #ffffff !important;
-            border: 1px solid #274f76 !important;
+            border: 1px solid var(--green) !important;
             border-radius: 999px;
             padding: 0.68rem 1.35rem;
             font-weight: 600;
-            box-shadow: 0 6px 14px rgba(45, 92, 136, 0.18);
+            box-shadow: 0 6px 14px rgba(47, 122, 89, 0.18);
           }
-          .stButton > button:hover, .stDownloadButton > button:hover { background: #274f76 !important; border-color: #274f76 !important; }
+          .stButton > button:hover, .stDownloadButton > button:hover { background: #256b4a !important; border-color: #256b4a !important; }
           .stButton > button p, .stButton > button span, .stDownloadButton > button p, .stDownloadButton > button span, [data-testid="stSidebar"] .stButton > button {
             color: #ffffff !important;
           }
@@ -143,8 +143,8 @@ def inject_apple_theme():
             border-bottom: 1px solid #e5ebf1 !important;
           }
           [data-testid="stExpander"] summary svg {
-            fill: #2d5c88 !important;
-            color: #2d5c88 !important;
+            fill: var(--accent) !important;
+            color: var(--accent) !important;
           }
           [data-testid="stExpander"] * { color: var(--text) !important; }
 
@@ -162,9 +162,18 @@ def inject_apple_theme():
             background: linear-gradient(180deg, #ffffff, #fbfcfd);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 2rem 2.2rem;
+            padding: 1.5rem 2rem;
             box-shadow: var(--shadow);
-            margin-bottom: 1.4rem;
+            margin-bottom: 1rem;
+          }
+          .onboarding-header {
+            background: linear-gradient(180deg, #ffffff, #fbfcfd);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+            text-align: center;
           }
           .hero-eyebrow {
             display: inline-block;
@@ -230,48 +239,105 @@ def inject_apple_theme():
           ::-webkit-scrollbar-thumb { background: #c2ced8; border-radius: 6px; }
           ::-webkit-scrollbar-thumb:hover { background: #a7b7c4; }
 
-          .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+          .block-container { padding-top: 1rem; padding-bottom: 1rem; }
+
+          .onboarding-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+          }
+          .transition-screen {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: var(--surface);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin: 2rem auto;
+            max-width: 600px;
+          }
+          .transition-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--accent-soft);
+            border-top: 4px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
 def render_hero():
-    logo_path = Path(__file__).with_name("ESG logo.png")
-    logo_src = "https://raw.githubusercontent.com/jyew0812/Sustainable-Finance/2c5bfb9bdef7e7c6aa2007c3783ef4170b30827b/finalized/ESG%20logo.png"
-    if logo_path.exists():
-        logo_b64 = base64.b64encode(logo_path.read_bytes()).decode("ascii")
-        logo_src = f"data:image/png;base64,{logo_b64}"
-    logo_html = (
-        f'<div style="display:flex;justify-content:flex-end;align-items:center;height:100%;">'
-        f'<img src="{logo_src}" '
-        f'style="max-width:560px;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,0.38));" '
-        f'alt="Greengate logo" />'
-        f'</div>'
-    )
-
     st.markdown(
         f"""
         <div class="hero-card">
-          <div style="display:flex;gap:1.6rem;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;">
-            <div style="flex:1 1 520px;min-width:320px;">
-              <div class="hero-eyebrow">Sustainable Portfolio Intelligence</div>
-              <h1 class="hero-title">
-                <span style="color:#2d5c88;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:800;letter-spacing:-0.05em;">Green</span>
-                <span style="color:#2f7a59;font-size:clamp(2.8rem,5vw,4.2rem);font-weight:800;letter-spacing:-0.05em;">gate</span>
-              </h1>
-              <p class="hero-subtitle">Invest smarter. Invest greener.</p>
-              <p class="hero-description">
-                Build a personalised multi-asset portfolio optimised for your risk profile and ESG values powered by
-                mean-variance theory and real market data. Complete your investor profile in the first tab, enter your
-                stocks in the sidebar, then hit <strong style="color:#2d5c88;">Run portfolio optimisation</strong>.
-              </p>
-            </div>
-            <div style="flex:0 0 52%;max-width:620px;min-width:320px;align-self:stretch;">
-              {logo_html}
-            </div>
+          <div style="text-align: center;">
+            <div class="hero-eyebrow">Sustainable Portfolio Intelligence</div>
+            <h1 class="hero-title">
+              <span style="color:#2f7a59;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;letter-spacing:-0.05em;">Green</span>
+              <span style="color:#2f7a59;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:800;letter-spacing:-0.05em;">gate</span>
+            </h1>
+            <p class="hero-subtitle">Invest smarter. Invest greener.</p>
+            <p class="hero-description" style="margin: 0 auto;">
+              Build a personalised multi-asset portfolio optimised for your risk profile and ESG values powered by
+              mean-variance theory and real market data.
+            </p>
           </div>
         </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+def render_onboarding_header():
+    st.markdown(
+        f"""
+        <div class="onboarding-header">
+          <div class="hero-eyebrow">Sustainable Portfolio Intelligence</div>
+          <h1 style="color:#2f7a59;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:800;letter-spacing:-0.05em;margin:0.5rem 0;">
+            Greengate
+          </h1>
+          <p style="font-size:0.9rem;color:var(--muted);margin:0;">Let's build your sustainable portfolio</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+def render_transition_screen():
+    st.markdown(
+        f"""
+        <div class="transition-screen">
+          <div class="transition-spinner"></div>
+          <h2 style="color:#2f7a59;font-size:1.5rem;margin:1rem 0 0.5rem 0;">Analysing your preferences...</h2>
+          <p style="color:var(--muted);font-size:0.95rem;margin:0;">Building your personalised sustainable portfolio</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+def hide_sidebar_for_onboarding():
+    st.markdown(
+        """
+        <style>
+          [data-testid="stSidebar"] { display: none !important; }
+          .main .block-container { max-width: none; padding-left: 2rem; padding-right: 2rem; }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+def show_sidebar_for_dashboard():
+    st.markdown(
+        """
+        <style>
+          [data-testid="stSidebar"] { display: block !important; }
+          .main .block-container { max-width: 46rem; padding-left: 1rem; padding-right: 1rem; }
+        </style>
         """,
         unsafe_allow_html=True,
     )
